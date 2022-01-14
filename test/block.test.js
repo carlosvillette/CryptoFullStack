@@ -7,13 +7,17 @@ describe('Block', () => {
    const lastHash = 'foo-hash';
    const hash = 'new-hash';
    const data = ['blockchain', 'transactions'];
-   const block = new Block ({timestamp, lastHash, hash, data}); // b/c. variable same name as arguments defined can shorthand the map-key pair
+   const nonce = 1;
+   const difficulty= 1;
+   const block = new Block ({timestamp, lastHash, hash, data, nonce, difficulty}); // b/c. variable same name as arguments defined can shorthand the map-key pair
 
-    it('has a timestamp, lastHash, hash, and data', () => {
+    it('has a timestamp, lastHash, hash, data, nonce, and difficulty', () => {
         expect(block.timestamp).toEqual(timestamp);
         expect(block.lastHash).toEqual(lastHash);
         expect(block.hash).toEqual(hash);
         expect(block.data).toEqual(data);
+        expect(block.nonce).toEqual(nonce);
+        expect(block.difficulty).toEqual(difficulty);
     });
 
     describe('genesis function', () => {
@@ -31,7 +35,7 @@ describe('Block', () => {
     describe("mineBlock", () =>{
         const lastBlock = Block.genesis();
         const data = 'the data';
-        const mineblock = Block.mineBlock({lastBlock, data});
+        const mineblock = Block.mineBlock({lastBlock, data, nonce, difficulty});
 
         it('Returns a Block instance', () => {
             expect(mineblock instanceof Block).toBe(true);
@@ -51,9 +55,20 @@ describe('Block', () => {
 
         it('creates a sha256 hash based on the proper inputs', () => {
             expect(mineblock.hash)
-                .toEqual(cryptoHash(mineblock.timestamp,lastBlock.hash,data));
+                .toEqual(cryptoHash(
+                    mineblock.timestamp,
+                    mineblock.nonce,
+                    mineblock.difficulty,
+                    lastBlock.hash,
+                    data
+                    )
+                );
         });
 
+        it('sets a hash that matches the difficulty value', () => {
+            expect(mineblock.hash.substring(0,mineblock.difficulty))
+                .toEqual('0'.repeat(mineblock.difficulty));
+        });
     });
 });
 
