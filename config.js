@@ -1,4 +1,5 @@
 const DIFFICULTY = 1;
+const MINE_RATE = 1000;
 
 const GENESIS_DATA = {
     timestamp: 1,
@@ -9,4 +10,4 @@ const GENESIS_DATA = {
     difficulty: DIFFICULTY
 };
 
-module.exports = {GENESIS_DATA};
+module.exports = {GENESIS_DATA, MINE_RATE};
