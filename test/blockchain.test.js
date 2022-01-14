@@ -3,6 +3,8 @@ const Blockchain = require('../blockchain');
 
 describe('Blockchain', () => {
     let blockchain, newChain, originalChain;
+    //const difficulty = 1;
+    //let nonce = 1;
 
     beforeEach( () => {
         blockchain = new Blockchain();
@@ -63,6 +65,7 @@ describe('Blockchain', () => {
                 it('returns true', () => {
 
                     expect(Blockchain.isValidChain(blockchain.chain)).toBe(true);
+                    //console.log(blockchain.chain);
                 });
             });
         });
@@ -94,7 +97,7 @@ describe('Blockchain', () => {
             });
         });
 
-        describe('when the chain is longer', () => {
+        describe('when the chain is longer', () => { //blockchain.chain is empty
             beforeEach( () => {
                 newChain.addBlock({data: 'hello'});
                 newChain.addBlock({data: 'hello World'});

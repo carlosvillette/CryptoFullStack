@@ -1,5 +1,6 @@
 const Block = require('./block');
 const cryptoHash = require('./cryptoHash');
+const {GENESIS_DATA} = require('./config');
 
 class Blockchain {
     constructor() {
@@ -26,6 +27,9 @@ class Blockchain {
         const gLastHash = gBlock.lastHash !== 'genesis';
         const gHash = gBlock.hash !== 'genesis1';
         const gData = Array.isArray(gBlock.data) && gBlock.data.length;
+        // THESE TWO BOTTOM LINES WERE CAUSING TESTS TO FAIL WHEN ADDED TO IF STATEMENT . . . NANI????
+        //const gNonce= gBlock.nonce === 0;
+        //const gDifficulty= gBlock.difficulty === GENESIS_DATA.difficulty;
         if (gTimestamp || gLastHash || gHash || gData) {
             return false;
         }
@@ -37,7 +41,14 @@ class Blockchain {
         }
         // check if hash of block is correct
         for (let j = 1; j < chain.length; j++) {
-            let newHash = cryptoHash(chain[j].timestamp, chain[j].lastHash,chain[j].data);
+            //console.log('The chain difficulty: ', chain[j].difficulty);
+            let newHash = cryptoHash(
+                chain[j].timestamp,
+                chain[j].nonce,
+                chain[j].difficulty,
+                chain[j].lastHash,
+                chain[j].data
+            );
             if (chain[j].hash !== newHash) {
                 return false;
             }
