@@ -8,7 +8,7 @@ describe('Block', () => {
    const hash = 'new-hash';
    const data = ['blockchain', 'transactions'];
    const nonce = 1;
-   const difficulty= 1;
+   const difficulty= 5;
    const block = new Block ({timestamp, lastHash, hash, data, nonce, difficulty}); // b/c. variable same name as arguments defined can shorthand the map-key pair
 
     it('has a timestamp, lastHash, hash, data, nonce, and difficulty', () => {
@@ -69,6 +69,14 @@ describe('Block', () => {
             expect(mineblock.hash.substring(0,mineblock.difficulty))
                 .toEqual('0'.repeat(mineblock.difficulty));
         });
+
+        it('adjusts the difficulty', () => {
+            const results = [lastBlock.difficulty + 1,lastBlock.difficulty - 1];
+
+            expect(mineblock.difficulty).toBe(0);
+            expect(results.includes(mineblock.difficulty)).toBe(true);
+        });
+
     });
 
     describe('adjustDifficulty()',() => {
@@ -83,6 +91,13 @@ describe('Block', () => {
                 originalBlock: block, timestamp: block.timestamp + MINE_RATE + 100
             })).toEqual(block.difficulty - 1);
         });
+
+        it('has a lower difficulty level of one',  () => {
+            block.difficulty = -1;
+
+            expect(Block.adjustDifficulty({originalBlock: block,timestamp: block.timestamp})).toEqual(1);
+        });
+
     });
 });
 
