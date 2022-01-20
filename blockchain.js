@@ -38,6 +38,11 @@ class Blockchain {
             if (chain[i - 1].hash !== chain[i].lastHash ) {
                 return false;
             }
+            // prevent dishonest miners from lowering/increasing difficulty a lot to mess with blockchain
+            if (Math.abs(chain[i - 1].difficulty - chain[i].difficulty) > 1) {
+                return false;
+            }
+
         }
         // check if hash of block is correct
         for (let j = 1; j < chain.length; j++) {

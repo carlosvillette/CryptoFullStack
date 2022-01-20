@@ -1,5 +1,6 @@
 const {GENESIS_DATA, MINE_RATE} = require('./config');
 const cryptoHash = require('./cryptoHash');
+const hexToBinary = require('hex-to-binary');
 
 class Block {
     // wrapping functions in map - key value structure to prevent misordered arguments
@@ -52,7 +53,7 @@ class Block {
              lastHash,
              data
          ); // may be a good idea to update timestamp
-         while (hash.substring(0,difficulty) !== '0'.repeat(difficulty)) {
+         while (hexToBinary(hash).substring(0,difficulty) !== '0'.repeat(difficulty)) {
              nonce++;
              timestamp = Date.now();
              difficulty = Block.adjustDifficulty({originalBlock: lastBlock,timestamp});

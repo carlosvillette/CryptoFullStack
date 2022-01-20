@@ -19,5 +19,8 @@
   "homepage": "https://github.com/carlosvillette/CryptoFullStack#readme",
   "devDependencies": {
     "jest": "^27.4.7"
+  },
+  "dependencies": {
+    "hex-to-binary": "^1.0.1"
   }
 }
