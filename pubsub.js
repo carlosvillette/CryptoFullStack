@@ -16,10 +16,12 @@ class Pubsub {
         await this.publisher.connect();
         await this.subscriber.connect();
 
-        await this.subscriber.subscribe(CHANNELS.TEST);
+        //await this.subscriber.subscribe(CHANNELS.TEST, (message) => {
+         //   console.log(message);
+        //});
 
-        await this.subscriber.on(
-            'message',
+        await this.subscriber.pSubscribe(
+            CHANNELS.TEST,
             (channel, message) => this.handleMessage(channel, message)
         );
     }
@@ -31,5 +33,5 @@ class Pubsub {
 
 const testPubSub = new Pubsub();
 testPubSub.connect();
-
-testPubSub.publisher.publish(CHANNELS.TEST, 'Hello World');
+//testPubSub.publisher.publish(CHANNELS.TEST, 'Hello World');
+setTimeout(() => testPubSub.publisher.publish(CHANNELS.TEST, 'Hello World'),1000);
