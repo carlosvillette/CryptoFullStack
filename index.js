@@ -14,7 +14,6 @@ const DEFAULT_PORT = 3000;
 const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
 
 pubsub.connect();
-setTimeout(() => pubsub.broadcastChain(), 1000);
 
 app.use(bodyParser.json());
 
@@ -53,6 +52,9 @@ if (process.env.GENERATE_PEER_PORT ==='true') {
 const PORT = PEER_PORT || DEFAULT_PORT;
 app.listen(PORT, () => {
     console.log(`listening at localhost:${PORT}`);
+    // no reason for root node to sync with itself
+    if (PORT !== DEFAULT_PORT){
+        syncChains();
+    }
 
-    syncChains();
 });

@@ -45,7 +45,14 @@ class Pubsub {
     }
 
     publish({channel, message}) {
-        this.publisher.publish(channel, message);
+        //don't want node to send to recieve messages it itself has published
+        this.subscriber.unsubscribe(channel, () => {
+            this.publisher.publish(channel, message, () => {
+                this.subscriber.subscribe(channel);
+            });
+        });
+
+        //this.publisher.publish(channel, message);
     }
 
     broadcastChain() {
