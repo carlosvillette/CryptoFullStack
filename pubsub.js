@@ -1,4 +1,4 @@
-const redis = require('redis');
+const Redis = require('ioredis');
 
 const CHANNELS = {
     TEST: 'TEST',
@@ -9,32 +9,21 @@ class Pubsub {
     constructor({blockchain}) {
         this.blockchain = blockchain;
 
-        this.publisher = redis.createClient();
-        this.subscriber = redis.createClient();
-        //this.publisher.connect();
-        //this.subscriber.connect();
+        this.publisher = new Redis();
+        this.subscriber = new Redis();
 
 
 
     }
 
     connect() {
-        this.publisher.connect();
-        this.subscriber.connect();
 
-        //this.subscribeToChannels();
         this.subscriber.on(
             'message',
             (channel, message) => this.handleMessage(channel, message)
         );
         this.subscribeToChannels();
-        /*
-                await this.subscriber.pSubscribe(
-                    CHANNELS.TEST,
-                    (message, channel) => this.handleMessage(message, channel)
-                );
 
-         */
     }
 
     handleMessage(channel, message) {
@@ -47,7 +36,7 @@ class Pubsub {
         }
     }
 
-    subscribeToChannels() { // async
+    subscribeToChannels() {
         for (const CHANNEL of Object.values(CHANNELS)) {
             this.subscriber.subscribe(CHANNEL, () => {
                 console.log(`Added channel: ${CHANNEL}\n`);
@@ -55,14 +44,11 @@ class Pubsub {
         }
     }
 
-    publish({channel, message}) { //async
-        //setTimeout(() => this.publisher.publish(channel, message),3000);
-        //setTimeout(() => this.handleMessage(message,channel), 1000);
+    publish({channel, message}) {
         this.publisher.publish(channel, message);
-        //this.handleMessage(channel, message);
     }
 
-    broadcastChain() { //async
+    broadcastChain() {
         this.publish({
             channel: CHANNELS.BLOCKCHAIN,
             message: JSON.stringify(this.blockchain.chain)
@@ -72,9 +58,4 @@ class Pubsub {
 }
 
 
-/*
-const testPubSub = new Pubsub();
-testPubSub.connect();
-setTimeout(() => testPubSub.publisher.publish(CHANNELS.TEST, 'Hello World'),1000);
- */
 module.exports = Pubsub;

@@ -8,12 +8,11 @@ const app = express();
 app.use(bodyParser.json());
 const blockchain = new Blockchain();
 const pubsub = new PubSub({blockchain});
-//setTimeout(  () => pubsub.connect(),1000);
 
 pubsub.connect();
-//pubsub.broadcastChain();
+setTimeout(() => pubsub.broadcastChain(), 1000);
 
-setTimeout(() => pubsub.broadcastChain(), 3000);
+
 app.get('/api/blockchain', (req,res) => {
     res.json(blockchain.chain);
 });
