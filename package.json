@@ -7,6 +7,7 @@
     "test": "jest --watchAll",
     "start": "node index.js",
     "dev": "npm run start-pubsub && nodemon index.js",
+    "dev-peer": "cross-env GENERATE_PEER_PORT='true' nodemon index.js",
     "start-pubsub": "redis-server --daemonize yes",
     "end-pubsub": "killall redis-server"
   },
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/carlosvillette/CryptoFullStack#readme",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^27.4.7",
     "nodemon": "^2.0.15"
   },
