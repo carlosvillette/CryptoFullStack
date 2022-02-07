@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest --watchAll",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "npm run start-pubsub && nodemon index.js",
+    "start-pubsub": "redis-server --daemonize yes",
+    "end-pubsub": "killall redis-server"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
     "body-parser": "^1.19.1",
     "express": "^4.16.3",
     "hex-to-binary": "^1.0.1",
+    "ioredis": "^4.28.5",
     "redis": "^4.0.2"
   }
 }
