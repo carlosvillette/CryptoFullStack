@@ -37,6 +37,7 @@
     "hex-to-binary": "^1.0.1",
     "ioredis": "^4.28.5",
     "redis": "^4.0.2",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "uuid": "^8.3.2"
   }
 }

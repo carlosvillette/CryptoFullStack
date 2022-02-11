@@ -3,7 +3,7 @@ const cryptoHash = require('./cryptoHash')
 
 const ec = new EC('secp256k1');
 
-function verifySignature({publicKey,data,signature}) {
+const verifySignature = ({publicKey,data,signature}) => {
     let key = ec.keyFromPublic(publicKey, 'hex');
     return key.verify(cryptoHash(data),signature);
 };
