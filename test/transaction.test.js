@@ -1,4 +1,4 @@
-const Transaction = require('./transaction');
+const Transaction = require('../wallet/transaction');
 const Wallet = require('../wallet/wallet');
 
 describe('Transaction', () => {
@@ -9,7 +9,7 @@ describe('Transaction', () => {
         recipient = 'recipient-public-key';
         amount = 100;
 
-        transaction = new Transaction({ senderWallet, recipeint, amount});
+        transaction = new Transaction({ senderWallet, recipient, amount});
     });
 
     it('has an id', () => {
