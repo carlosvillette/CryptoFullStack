@@ -1,5 +1,6 @@
 //const  uuid = require('uuid/v1');
 const { v1: uuid } = require('uuid');
+const {verifySignature} = require('../util/elliptic')
 
 class Transaction {
     constructor({senderWallet, recipient, amount}) {
@@ -26,6 +27,31 @@ class Transaction {
             address: senderWallet.publicKey,
             signature: senderWallet.sign(outputMap)
         };
+    }
+
+    static validTransaction(transaction) {
+        const {input, outputMap} = transaction;
+
+        const {address, amount, signature} = input;
+
+        const ouputTotal = Object.values(outputMap)
+            .reduce((total, outputAmount) => total + outputAmount);
+
+        if (amount !== ouputTotal) {
+            console.error(`invalid transaction from ${address}`);
+            return false;
+        }
+
+        if (!verifySignature(
+            {publicKey:address,
+                data:outputMap,
+                signature: signature }
+        )) {
+            console.error(`Invalid signature from ${address}`);
+            return false;
+        }
+
+        return true;
     }
 }
 
