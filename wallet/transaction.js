@@ -34,10 +34,10 @@ class Transaction {
 
         const {address, amount, signature} = input;
 
-        const ouputTotal = Object.values(outputMap)
+        const outputTotal = Object.values(outputMap)
             .reduce((total, outputAmount) => total + outputAmount);
 
-        if (amount !== ouputTotal) {
+        if (amount !== outputTotal) {
             console.error(`invalid transaction from ${address}`);
             return false;
         }
@@ -52,6 +52,12 @@ class Transaction {
         }
 
         return true;
+    }
+
+    update({senderWallet, recipient, amount}) {
+        this.outputMap[recipient] = amount;
+        this.outputMap[senderWallet.publicKey] -= amount;
+        this.input.signature = senderWallet.sign(this.outputMap);
     }
 }
 
