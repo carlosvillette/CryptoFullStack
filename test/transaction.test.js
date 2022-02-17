@@ -126,6 +126,28 @@ describe('Transaction', () => {
                 it('resigns the transaction', () => {
                     expect(transaction.input.signature).not.toEqual(originalSignature);
                 });
+
+                describe('update for a recipient that is already included', ()=> {
+                    let oldRecipientAmount;
+                    let oldSenderWalletBalance;
+                    let addedAmount;
+                    beforeEach(() => {
+                        oldRecipientAmount = transaction.outputMap[nextRecipient];
+                        oldSenderWalletBalance = transaction.outputMap[senderWallet.publicKey];
+                        addedAmount = 60;
+                        transaction.update({senderWallet, recipient: nextRecipient, amount: addedAmount});
+                    });
+
+                    it('adds to the recipient amount', () => {
+                        expect(transaction.outputMap[nextRecipient]).toEqual(oldRecipientAmount + addedAmount);
+                    });
+
+                    it('subtract amount from the original sender waller amount', () => {
+                        expect(transaction.outputMap[senderWallet.publicKey]).toEqual(oldSenderWalletBalance - addedAmount);
+                    });
+
+
+                });
             });
 
             describe('and the amount is invalid', ()=> {
