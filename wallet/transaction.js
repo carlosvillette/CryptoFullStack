@@ -4,7 +4,7 @@ const {verifySignature} = require('../util/elliptic')
 
 class Transaction {
     constructor({senderWallet, recipient, amount}) {
-        this.id = uuid().split('-').join();
+        this.id = uuid().split('-').join('');
         // public keys are used as the keys that map to the wallet amount
         this.outputMap = this.makeOutputMap({senderWallet,recipient, amount});
         this.input = this.createInput({senderWallet, outputMap: this.outputMap});
