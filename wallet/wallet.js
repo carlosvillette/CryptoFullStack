@@ -13,7 +13,7 @@ class Wallet {
 
     sign(data) {
         let signature = this.keyPair.sign(cryptoHash(data));
-        return signature.toDER();
+        return signature;
     }
 
     createTransaction({amount, recipient}) {
