@@ -4,7 +4,7 @@ const {verifySignature} = require('../util/elliptic')
 
 class Transaction {
     constructor({senderWallet, recipient, amount}) {
-        this.id = uuid().split('-').join();
+        this.id = uuid().split('-').join('');
         // public keys are used as the keys that map to the wallet amount
         this.outputMap = this.makeOutputMap({senderWallet,recipient, amount});
         this.input = this.createInput({senderWallet, outputMap: this.outputMap});
@@ -55,7 +55,16 @@ class Transaction {
     }
 
     update({senderWallet, recipient, amount}) {
-        this.outputMap[recipient] = amount;
+        if (amount > this.outputMap[senderWallet.publicKey]) {
+            throw new Error('Amount exceeds balance');
+        }
+
+        if (!this.outputMap[recipient]) {
+            this.outputMap[recipient] = amount;
+        } else {
+            this.outputMap[recipient] = this.outputMap[recipient] + amount;
+        }
+
         this.outputMap[senderWallet.publicKey] -= amount;
         this.input.signature = senderWallet.sign(this.outputMap);
     }

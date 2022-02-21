@@ -2,12 +2,14 @@ const Redis = require('ioredis');
 
 const CHANNELS = {
     TEST: 'TEST',
-    BLOCKCHAIN: 'BLOCKCHAIN'
+    BLOCKCHAIN: 'BLOCKCHAIN',
+    TRANSACTION: 'TRANSACTION'
 };
 
 class Pubsub {
-    constructor({blockchain}) {
+    constructor({blockchain, transactionPool}) {
         this.blockchain = blockchain;
+        this.transactionPool = transactionPool;
 
         this.publisher = new Redis();
         this.subscriber = new Redis();
@@ -31,9 +33,17 @@ class Pubsub {
 
         const parsedMessage = JSON.parse(message);
 
-        if (channel === CHANNELS.BLOCKCHAIN) {
-            this.blockchain.replaceChain(parsedMessage)
+        switch (channel) {
+            case CHANNELS.BLOCKCHAIN:
+                this.blockchain.replaceChain(parsedMessage);
+                break;
+            case CHANNELS.TRANSACTION:
+                this.transactionPool.setTransaction(parsedMessage);
+                break;
+            default:
+                return;
         }
+
     }
 
     subscribeToChannels() {
@@ -61,6 +71,13 @@ class Pubsub {
             message: JSON.stringify(this.blockchain.chain)
         });
 
+    }
+
+    broadcastTransaction(transaction) {
+        this.publish({
+            channel: CHANNELS.TRANSACTION,
+            message: JSON.stringify(transaction)
+        })
     }
 }
 
