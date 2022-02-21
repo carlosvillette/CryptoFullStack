@@ -69,8 +69,19 @@ const syncChains = () => {
         if (!error && response.statusCode === 200) {
             const rootChain = JSON.parse(body);
 
-            console.log('replace chain on a sync with', rootChain);
+            console.log('replace chain on a sync with: \n', rootChain);
             blockchain.replaceChain(rootChain);
+        }
+    });
+};
+
+const syncTransaction = () => {
+    request({uri: `${ROOT_NODE_ADDRESS}/api/transaction-pool-map`}, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+            const rootTransactionMap = JSON.parse(body);
+
+            console.log('replace transaction map on sync with: \n', rootTransactionMap);
+            transactionPool.setMap(rootTransactionMap);
         }
     });
 };
@@ -88,6 +99,7 @@ app.listen(PORT, () => {
     // no reason for root node to sync with itself
     if (PORT !== DEFAULT_PORT){
         syncChains();
+        syncTransaction();
     }
 
 });
