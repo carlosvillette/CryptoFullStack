@@ -7,6 +7,7 @@ class Transaction {
     constructor({senderWallet, recipient, amount, outputMap, input}) {
         this.id = uuid().split('-').join('');
         // public keys are used as the keys that map to the wallet amount
+        // using the || operator will allow for setting values of the variable depending if a value is assigned or not
         this.outputMap = outputMap || this.makeOutputMap({senderWallet,recipient, amount});
         this.input = input || this.createInput({senderWallet, outputMap: this.outputMap});
 

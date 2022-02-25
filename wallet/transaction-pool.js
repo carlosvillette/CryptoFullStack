@@ -29,6 +29,29 @@ class TransactionPool {
 
         return validTransaction;
     }
+
+    //will be used for final step for mine transactions method
+    clear() {
+        this.transactionMap = {};
+    }
+
+    //what peers will call when they accept a new blockchain to be replaced
+    clearBlockchainTransactions({chain}) {
+        for (const block of chain) {
+            //must skip genesis block
+            if (block.lastHash === 'genesis') {
+                continue;
+            }
+            const transactions = block.data;
+            for (let transaction of transactions){
+                if (this.transactionMap[transaction.id]) {
+                    delete this.transactionMap[transaction.id];
+                }
+            }
+
+        }
+    }
+
 }
 
 module.exports = TransactionPool;
