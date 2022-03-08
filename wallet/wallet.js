@@ -21,7 +21,7 @@ class Wallet {
             this.balance = Wallet.calculateBalance({
                 chain,
                 address: this.publicKey
-            })
+            });
         }
 
         if (amount > this.balance) {
@@ -33,14 +33,19 @@ class Wallet {
 
     static calculateBalance({chain,address}) {
         let summation = 0;
+        let inputOutputAddressSame = false;
         for (let block = chain.length -1; block > 0; block--) {
             for (const transaction of chain[block].data) {
+
                 if (transaction.input.address === address && transaction.outputMap[address]) {
-                    return transaction.outputMap[address] + summation;
+                    inputOutputAddressSame = true;
                 }
                 if (transaction.outputMap[address]) {
                     summation += transaction.outputMap[address];
                 }
+            }
+            if (inputOutputAddressSame) {
+                return summation;
             }
         }
         return summation + STARTING_BALANCE;
