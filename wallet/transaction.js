@@ -1,13 +1,15 @@
 //const  uuid = require('uuid/v1');
 const { v1: uuid } = require('uuid');
-const {verifySignature} = require('../util/elliptic')
+const {verifySignature} = require('../util/elliptic');
+const {REWARD_INPUT, MINING_REWARD} = require('../config');
 
 class Transaction {
-    constructor({senderWallet, recipient, amount}) {
+    constructor({senderWallet, recipient, amount, outputMap, input}) {
         this.id = uuid().split('-').join('');
         // public keys are used as the keys that map to the wallet amount
-        this.outputMap = this.makeOutputMap({senderWallet,recipient, amount});
-        this.input = this.createInput({senderWallet, outputMap: this.outputMap});
+        // using the || operator will allow for setting values of the variable depending if a value is assigned or not
+        this.outputMap = outputMap || this.makeOutputMap({senderWallet,recipient, amount});
+        this.input = input || this.createInput({senderWallet, outputMap: this.outputMap});
 
     }
 
@@ -53,6 +55,16 @@ class Transaction {
 
         return true;
     }
+
+    static rewardTransaction({minerWallet}) {
+        const outputMap = {};
+
+        outputMap[minerWallet.publicKey] = MINING_REWARD
+
+        const input = REWARD_INPUT;
+
+        return new this({outputMap, input});
+    };
 
     update({senderWallet, recipient, amount}) {
         if (amount > this.outputMap[senderWallet.publicKey]) {

@@ -1,6 +1,8 @@
 const Block = require('./block');
 const cryptoHash = require('../util/cryptoHash');
-const {GENESIS_DATA} = require('../config');
+const {GENESIS_DATA, REWARD_INPUT, MINING_REWARD} = require('../config');
+const Transaction = require('../wallet/transaction');
+const Wallet = require('../wallet/wallet');
 
 class Blockchain {
     constructor() {
@@ -63,18 +65,75 @@ class Blockchain {
 
     }
 
-    replaceChain(chain) {
+    replaceChain(chain, validateTransaction, onSuccess) {
         const longer = chain.length > this.chain.length;
         const valid = Blockchain.isValidChain(chain);
+        //this way we won't have to refactor tests for replaceChain()
+        const validTransaction = validateTransaction ?  this.validTransactionData({chain}): true;
 
-        if (longer && valid) {
+        if (longer && valid && validTransaction) {
+            if (onSuccess) {
+                onSuccess();
+            }
             this.chain = chain;
             console.log('replacing chain with: ', chain);
         } else if (!longer) {
             console.error("The new chain must be longer");
-        } else {
+        } else if (!valid) {
             console.error("The new chain must be valid");
+        } else {
+            console.error(`There is invalid transaction data`)
         }
+    }
+
+    validTransactionData ({chain}) {
+        for (let i = 1; i<chain.length; i++) {
+            const block = chain[i];
+            const transactionSet = new Set();
+            let rewardTransactionCount = 0;
+
+            for (let transaction of block.data) {
+                if( transaction.input.address === REWARD_INPUT.address) {
+                    rewardTransactionCount++;
+
+                    if (rewardTransactionCount > 1) {
+                        console.error(`too many reward transactions. You have ${rewardTransactionCount} reward transactions`);
+                        return false;
+                    }
+
+                    // a reward transaction would only contain 1 value in the output map
+                    if(Object.values(transaction.outputMap)[0] !== MINING_REWARD) {
+                        console.error(`Miner Reward incorrect: \n ${transaction}`);
+                        return false;
+                    }
+                } else { // regular transactions
+
+                    if (!Transaction.validTransaction(transaction)) {
+                        console.error(`This transaction is invalid:\n ${transaction}`);
+                        return false;
+                    }
+                    // don't want to use chain passed in as argument because that would be the attacker's chain
+                    const trueBalance = Wallet.calculateBalance({
+                        chain: this.chain,
+                        address: transaction.input.address
+                    });
+
+                    if (transaction.input.amount !== trueBalance) {
+                        console.error(`This transaction's input is not correct:\n Faulty transaction: ${transaction}\n True balance: ${trueBalance}`);
+                        return false;
+                    }
+
+                    if (transactionSet.has(transaction)) {
+                        console.error(`transaction already exists in the block\n Transaction:\n ${transaction}`);
+                        return false;
+                    } else {
+                        transactionSet.add(transaction);
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 }
 
