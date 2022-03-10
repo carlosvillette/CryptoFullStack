@@ -217,6 +217,26 @@ describe('Blockchain', () => {
         describe('the transaction data has at least one malformed input', () => {
             it('returns false and logs an error', () => {
 
+                wallet.balance = 9001; // it's over 9000!!
+
+                const wrongOutputMap = {
+                    [wallet.publicKey]: wallet.balance - 100,
+                    barRecipient: 100
+                };
+
+                const wrongTransaction = {
+                    input: {
+                        timestamp: Date.now(),
+                        amount: wallet.balance,
+                        address: wallet.publicKey,
+                        signature: wallet.sign(wrongOutputMap)
+                    },
+                    outputMap: wrongOutputMap
+                };
+
+                newChain.addBlock({data: [wrongTransaction,rewardTransaction]});
+                expect(blockchain.validTransactionData({ chain: newChain.chain})).toBe(false);
+                expect(error).toHaveBeenCalled();
             });
         });
 

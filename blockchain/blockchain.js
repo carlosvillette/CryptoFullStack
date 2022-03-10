@@ -2,6 +2,7 @@ const Block = require('./block');
 const cryptoHash = require('../util/cryptoHash');
 const {GENESIS_DATA, REWARD_INPUT, MINING_REWARD} = require('../config');
 const Transaction = require('../wallet/transaction');
+const Wallet = require('../wallet/wallet');
 
 class Blockchain {
     constructor() {
@@ -100,10 +101,20 @@ class Blockchain {
                         console.error(`Miner Reward incorrect: \n ${transaction}`);
                         return false;
                     }
-                } else {
+                } else { // regular transactions
 
                     if (!Transaction.validTransaction(transaction)) {
                         console.error(`This transaction is invalid:\n ${transaction}`);
+                        return false;
+                    }
+                    // don't want to use chain passed in as argument because that would be the attacker's chain
+                    const trueBalance = Wallet.calculateBalance({
+                        chain: this.chain,
+                        address: transaction.input.address
+                    });
+
+                    if (transaction.input.amount !== trueBalance) {
+                        console.error(`This transaction's input is not correct:\n Faulty transaction: ${transaction}\n True balance: ${trueBalance}`);
                         return false;
                     }
                 }
