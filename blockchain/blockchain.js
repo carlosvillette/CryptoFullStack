@@ -65,11 +65,13 @@ class Blockchain {
 
     }
 
-    replaceChain(chain, onSuccess) {
+    replaceChain(chain, validateTransaction, onSuccess) {
         const longer = chain.length > this.chain.length;
         const valid = Blockchain.isValidChain(chain);
+        //this way we won't have to refactor tests for replaceChain()
+        const validTransaction = validateTransaction ?  this.validTransactionData({chain}): true;
 
-        if (longer && valid) {
+        if (longer && valid && validTransaction) {
             if (onSuccess) {
                 onSuccess();
             }
@@ -77,14 +79,17 @@ class Blockchain {
             console.log('replacing chain with: ', chain);
         } else if (!longer) {
             console.error("The new chain must be longer");
-        } else {
+        } else if (!valid) {
             console.error("The new chain must be valid");
+        } else {
+            console.error(`There is invalid transaction data`)
         }
     }
 
     validTransactionData ({chain}) {
         for (let i = 1; i<chain.length; i++) {
             const block = chain[i];
+            const transactionSet = new Set();
             let rewardTransactionCount = 0;
 
             for (let transaction of block.data) {
@@ -116,6 +121,13 @@ class Blockchain {
                     if (transaction.input.amount !== trueBalance) {
                         console.error(`This transaction's input is not correct:\n Faulty transaction: ${transaction}\n True balance: ${trueBalance}`);
                         return false;
+                    }
+
+                    if (transactionSet.has(transaction)) {
+                        console.error(`transaction already exists in the block\n Transaction:\n ${transaction}`);
+                        return false;
+                    } else {
+                        transactionSet.add(transaction);
                     }
                 }
             }
