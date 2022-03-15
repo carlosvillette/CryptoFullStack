@@ -1,15 +1,20 @@
 {
   "name": "cryptofullstack",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "targets": {
+    "main": false
+  },
   "scripts": {
     "test": "jest --watchAll",
     "start": "node index.js",
     "dev": "npm run start-pubsub && nodemon index.js",
     "dev-peer": "cross-env GENERATE_PEER_PORT='true' nodemon index.js",
     "start-pubsub": "redis-server --daemonize yes",
-    "end-pubsub": "killall redis-server"
+    "end-pubsub": "killall redis-server",
+    "build-client": "parcel build client/src/index.html --dist-dir client/dist"
   },
   "jest": {
     "testEnvironment": "node"
@@ -36,6 +41,9 @@
     "express": "^4.16.3",
     "hex-to-binary": "^1.0.1",
     "ioredis": "^4.28.5",
+    "parcel": "^2.3.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "redis": "^4.0.2",
     "request": "^2.88.2",
     "uuid": "^8.3.2"
