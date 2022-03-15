@@ -23,6 +23,7 @@ const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
 pubsub.connect();
 
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'client')));
 
 app.get('/api/blockchain', (req,res) => {
     res.json(blockchain.chain);
