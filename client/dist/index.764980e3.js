@@ -1008,11 +1008,12 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactDom = require("react-dom");
-_reactDom.render(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-    children: "Cryptochain in React!: New Update 3"
+var _app = require("./components/App");
+var _appDefault = parcelHelpers.interopDefault(_app);
+_reactDom.render(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_appDefault.default, {
 }, void 0, false, {
     fileName: "client/src/index.js",
-    lineNumber: 4,
+    lineNumber: 5,
     columnNumber: 8
 }, undefined), document.getElementById('root'));
 
@@ -1021,7 +1022,7 @@ _reactDom.render(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iTorj":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./components/App":"ifYPa"}],"iTorj":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react-jsx-dev-runtime.development.js');
 
@@ -22917,6 +22918,36 @@ function registerExportsForReactRefresh(module) {
     }
 }
 
-},{"react-refresh/runtime":"786KC"}]},["kn9T2","8rmpt","iXgNX"], "iXgNX", "parcelRequire17cc")
+},{"react-refresh/runtime":"786KC"}],"ifYPa":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$84ad = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$84ad.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+class App extends _react.Component {
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            children: "Welcome to the blockchain!"
+        }, void 0, false, {
+            fileName: "client/src/components/App.js",
+            lineNumber: 6,
+            columnNumber: 13
+        }, this));
+    }
+}
+exports.default = App;
+
+  $parcel$ReactRefreshHelpers$84ad.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["kn9T2","8rmpt","iXgNX"], "iXgNX", "parcelRequire17cc")
 
 //# sourceMappingURL=index.764980e3.js.map
