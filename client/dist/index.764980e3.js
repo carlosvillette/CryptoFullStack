@@ -22931,12 +22931,54 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 class App extends _react.Component {
+    state = {
+        walletInfo: {
+        }
+    };
+    componentDidMount() {
+        fetch('http://localhost:3000/api/wallet-info').then((response)=>response.json()
+        ).then((json)=>this.setState({
+                walletInfo: json
+            })
+        );
+    }
     render() {
+        const { address , balance  } = this.state.walletInfo;
         return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-            children: "Welcome to the blockchain!"
-        }, void 0, false, {
+            children: [
+                "Welcome to the blockchain!",
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                            children: [
+                                "Address: ",
+                                address
+                            ]
+                        }, void 0, true, {
+                            fileName: "client/src/components/App.js",
+                            lineNumber: 19,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                            children: [
+                                "Balance: ",
+                                balance
+                            ]
+                        }, void 0, true, {
+                            fileName: "client/src/components/App.js",
+                            lineNumber: 20,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "client/src/components/App.js",
+                    lineNumber: 18,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
             fileName: "client/src/components/App.js",
-            lineNumber: 6,
+            lineNumber: 16,
             columnNumber: 13
         }, this));
     }
