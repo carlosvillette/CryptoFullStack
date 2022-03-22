@@ -1007,6 +1007,7 @@ try {
 var _react = _interopRequireDefault(require("react"));
 var _reactDom = require("react-dom");
 var _App = _interopRequireDefault(require("./components/App"));
+require("./index.css");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
@@ -1019,7 +1020,7 @@ function _interopRequireDefault(obj) {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","react-dom":"j6uA9","./components/App":"ifYPa","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"21dqq":[function(require,module,exports) {
+},{"react":"21dqq","react-dom":"j6uA9","./components/App":"ifYPa","./index.css":"b8ft2","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"21dqq":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react.development.js');
 
@@ -21991,6 +21992,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _Blocks = _interopRequireDefault(require("./Blocks"));
+var _block = _interopRequireDefault(require("../assets/block.png"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
@@ -22146,7 +22148,14 @@ var App = /*#__PURE__*/ function(_Component) {
             key: "render",
             value: function render() {
                 var _this$state$walletInf = this.state.walletInfo, address = _this$state$walletInf.address, balance = _this$state$walletInf.balance;
-                return(/*#__PURE__*/ _react.default.createElement("div", null, "Welcome to the blockchain!", /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement("div", null, "Address: ", address), /*#__PURE__*/ _react.default.createElement("div", null, "Balance: ", balance), /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement(_Blocks.default, null))));
+                return(/*#__PURE__*/ _react.default.createElement("div", {
+                    className: "App"
+                }, /*#__PURE__*/ _react.default.createElement("img", {
+                    className: "logo",
+                    src: _block.default
+                }), /*#__PURE__*/ _react.default.createElement("br", null), "Welcome to the blockchain!", /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement("div", {
+                    className: "WalletInfo"
+                }, /*#__PURE__*/ _react.default.createElement("div", null, "Address: ", address), /*#__PURE__*/ _react.default.createElement("div", null, "Balance: ", balance)), /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement(_Blocks.default, null))));
             }
         }
     ]);
@@ -22160,7 +22169,7 @@ exports.default = _default;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","./Blocks":"gec3j","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gec3j":[function(require,module,exports) {
+},{"react":"21dqq","./Blocks":"gec3j","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../assets/block.png":"1isz7"}],"gec3j":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$e429 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -22331,7 +22340,8 @@ var Blocks = /*#__PURE__*/ function(_Component) {
                 console.log('this.state', this.state);
                 return(/*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement("h3", null, "Blocks"), this.state.blocks.map(function(block) {
                     return(/*#__PURE__*/ _react.default.createElement("div", {
-                        key: block.hash
+                        key: block.hash,
+                        className: "Block"
                     }, block.hash));
                 })));
             }
@@ -22467,6 +22477,44 @@ function registerExportsForReactRefresh(module) {
     }
 }
 
-},{"react-refresh/runtime":"786KC"}]},["kn9T2","8rmpt","iXgNX"], "iXgNX", "parcelRequire17cc")
+},{"react-refresh/runtime":"786KC"}],"1isz7":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1jP1U') + "block.aa13aaaa.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {
+};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"b8ft2":[function() {},{}]},["kn9T2","8rmpt","iXgNX"], "iXgNX", "parcelRequire17cc")
 
 //# sourceMappingURL=index.764980e3.js.map
