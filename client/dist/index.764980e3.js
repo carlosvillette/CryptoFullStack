@@ -22384,6 +22384,12 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _reactBootstrap = require("react-bootstrap");
+var _Transaction = _interopRequireDefault(require("./Transaction"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        default: obj
+    };
+}
 function _getRequireWildcardCache(nodeInterop1) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -22527,7 +22533,13 @@ var Block = /*#__PURE__*/ function(_Component) {
                 var data = this.props.block.data;
                 var stringifiedData = JSON.stringify(data);
                 var dataDisplay = !this.state.displayTransaction ? "".concat(stringifiedData.substring(0, 35), "...") : stringifiedData;
-                if (this.state.displayTransaction) return(/*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement("div", null, "Data: ", dataDisplay), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
+                if (this.state.displayTransaction) return(/*#__PURE__*/ _react.default.createElement("div", null, data.map(function(transaction) {
+                    return(/*#__PURE__*/ _react.default.createElement("div", {
+                        key: transaction.id
+                    }, /*#__PURE__*/ _react.default.createElement("hr", null), /*#__PURE__*/ _react.default.createElement(_Transaction.default, {
+                        transaction: transaction
+                    })));
+                }), /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
                     bsStyle: "danger",
                     bsSize: "small",
                     onClick: this.toggleTransaction
@@ -22560,7 +22572,7 @@ exports.default = _default;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap":"3AD9A"}],"km3Ru":[function(require,module,exports) {
+},{"react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap":"3AD9A","./Transaction":"jLraF"}],"km3Ru":[function(require,module,exports) {
 "use strict";
 var Refresh = require('react-refresh/runtime');
 function debounce(func, delay) {
@@ -36094,7 +36106,47 @@ Tooltip.defaultProps = defaultProps;
 Tooltip.displayName = 'Tooltip';
 exports.default = Tooltip;
 
-},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./helpers":"gotcT","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1isz7":[function(require,module,exports) {
+},{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./helpers":"gotcT","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jLraF":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$f995 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$f995.prelude(module);
+
+try {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        default: obj
+    };
+}
+var Transaction = function Transaction(props) {
+    var _props$transaction = props.transaction, input = _props$transaction.input, outputMap = _props$transaction.outputMap;
+    var recipients = Object.keys(outputMap);
+    return(/*#__PURE__*/ _react.default.createElement("div", {
+        className: "Transaction"
+    }, /*#__PURE__*/ _react.default.createElement("div", null, " From: ", "".concat(input.address.substring(0, 20)), " | Balance: ", input.amount), recipients.map(function(recipient) {
+        return(/*#__PURE__*/ _react.default.createElement("div", {
+            key: recipient
+        }, "To: ", "".concat(recipient.substring(0, 20), "..."), " | Sent: ", outputMap[recipient]));
+    })));
+};
+_c = Transaction;
+var _default = Transaction;
+exports.default = _default;
+var _c;
+$RefreshReg$(_c, "Transaction");
+
+  $parcel$ReactRefreshHelpers$f995.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"1isz7":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('1jP1U') + "block.aa13aaaa.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
