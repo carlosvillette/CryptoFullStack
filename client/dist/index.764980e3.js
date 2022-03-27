@@ -38199,6 +38199,23 @@ var ConductTransaction = /*#__PURE__*/ function(_Component) {
                 amount: Number(event.target.value)
             });
         });
+        _defineProperty(_assertThisInitialized(_this), "conductTransaction", function() {
+            var _this$state = _this.state, recipient = _this$state.recipient, amount = _this$state.amount;
+            fetch('http://localhost:3000/api/transact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    recipient: recipient,
+                    amount: amount
+                })
+            }).then(function(response) {
+                return response.json();
+            }).then(function(json) {
+                alert(json.message || json.type);
+            });
+        });
         return _this;
     }
     _createClass(ConductTransaction1, [
@@ -38220,7 +38237,10 @@ var ConductTransaction = /*#__PURE__*/ function(_Component) {
                     placeholder: "amount",
                     value: this.state.amount,
                     onChange: this.updateAmount
-                }))));
+                })), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
+                    bsstyle: "primary",
+                    onClick: this.conductTransaction
+                }, "Submit"))));
             }
         }
     ]);
