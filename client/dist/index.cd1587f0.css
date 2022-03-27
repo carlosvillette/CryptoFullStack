@@ -19,6 +19,10 @@ body {
     align-items: center;
 }
 
+.Transaction {
+    padding: 5%;
+}
+
 .WalletInfo {
     width: 500px;
 }
@@ -27,5 +31,10 @@ body {
     border: 1px solid #fff;
     padding: 5%;
     margin: 2%;
+}
+
+a, a:hover {
+    color: blue;
+    text-decoration: underline;
 }
 /*# sourceMappingURL=index.cd1587f0.css.map */
