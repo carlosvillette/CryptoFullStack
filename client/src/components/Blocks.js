@@ -15,6 +15,7 @@ class Blocks extends Component {
         return (
             <div>
                 <div><Link to='/'>Home</Link></div>
+                <div><Link to='/conduct-transaction'>Conduct a Transaction</Link></div>
                 <h3>Blocks</h3>
                 {
                     this.state.blocks.map(block => {

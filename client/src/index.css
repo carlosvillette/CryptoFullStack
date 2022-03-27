@@ -33,6 +33,10 @@ body {
     margin: 2%;
 }
 
+.ConductTransaction {
+    margin: 10%;
+}
+
 a, a:hover {
     color: blue;
     text-decoration: underline;
