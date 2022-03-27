@@ -32,4 +32,9 @@ body {
     padding: 5%;
     margin: 2%;
 }
+
+a, a:hover {
+    color: blue;
+    text-decoration: underline;
+}
 /*# sourceMappingURL=index.cd1587f0.css.map */

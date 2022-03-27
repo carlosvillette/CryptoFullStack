@@ -32,3 +32,8 @@ body {
     padding: 5%;
     margin: 2%;
 }
+
+a, a:hover {
+    color: blue;
+    text-decoration: underline;
+}
