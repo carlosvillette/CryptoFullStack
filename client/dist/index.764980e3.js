@@ -38066,12 +38066,6 @@ exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _reactBootstrap = require("react-bootstrap");
 var _reactRouterDom = require("react-router-dom");
-var _history = _interopRequireDefault(require("../history"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        default: obj
-    };
-}
 function _getRequireWildcardCache(nodeInterop1) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -38099,176 +38093,112 @@ function _interopRequireWildcard(obj, nodeInterop) {
     if (cache) cache.set(obj, newObj);
     return newObj;
 }
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    Object.defineProperty(Constructor, "prototype", {
-        writable: false
-    });
-    return Constructor;
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-            value: subClass,
-            writable: true,
-            configurable: true
-        }
-    });
-    Object.defineProperty(subClass, "prototype", {
-        writable: false
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
 }
-function _setPrototypeOf(o1, p1) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-        o.__proto__ = p;
-        return o;
-    };
-    return _setPrototypeOf(o1, p1);
-}
-function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-    return function _createSuperInternal() {
-        var Super = _getPrototypeOf(Derived), result;
-        if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-        } else result = Super.apply(this, arguments);
-        return _possibleConstructorReturn(this, result);
-    };
-}
-function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
-    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
-    return _assertThisInitialized(self);
-}
-function _assertThisInitialized(self) {
-    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    return self;
-}
-function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
     try {
-        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-        }));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-function _getPrototypeOf(o2) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o);
-    };
-    return _getPrototypeOf(o2);
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-var ConductTransaction = /*#__PURE__*/ function(_Component) {
-    _inherits(ConductTransaction1, _Component);
-    var _super = _createSuper(ConductTransaction1);
-    function ConductTransaction1() {
-        var _this;
-        _classCallCheck(this, ConductTransaction1);
-        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++)args[_key] = arguments[_key];
-        _this = _super.call.apply(_super, [
-            this
-        ].concat(args));
-        _defineProperty(_assertThisInitialized(_this), "state", {
-            recipient: '',
-            amount: 0
-        });
-        _defineProperty(_assertThisInitialized(_this), "updateRecipient", function(event) {
-            _this.setState({
-                recipient: event.target.value
-            });
-        });
-        _defineProperty(_assertThisInitialized(_this), "updateAmount", function(event) {
-            _this.setState({
-                amount: Number(event.target.value)
-            });
-        });
-        _defineProperty(_assertThisInitialized(_this), "conductTransaction", function() {
-            var _this$state = _this.state, recipient = _this$state.recipient, amount = _this$state.amount;
-            fetch('http://localhost:3000/api/transact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    recipient: recipient,
-                    amount: amount
-                })
-            }).then(function(response) {
-                return response.json();
-            }).then(function(json) {
-                alert(json.message || json.type);
-                _history.default.push('/transaction-pool');
-            });
-        });
-        return _this;
-    }
-    _createClass(ConductTransaction1, [
-        {
-            key: "render",
-            value: function render() {
-                console.log('this.state', this.state);
-                return(/*#__PURE__*/ _react.default.createElement("div", {
-                    className: "ConductTransaction"
-                }, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
-                    to: "/"
-                }, "Home"), /*#__PURE__*/ _react.default.createElement("h3", null, "Conduct a Transaction"), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormGroup, null, /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormControl, {
-                    input: "text",
-                    placeholder: "recipient",
-                    value: this.state.recipient,
-                    onChange: this.updateRecipient
-                })), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormGroup, null, /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormControl, {
-                    input: "number",
-                    placeholder: "amount",
-                    value: this.state.amount,
-                    onChange: this.updateAmount
-                })), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
-                    bsstyle: "primary",
-                    onClick: this.conductTransaction
-                }, "Submit"))));
-            }
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
         }
-    ]);
-    return ConductTransaction1;
-}(_react.Component);
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+function ConductTransaction() {
+    var _useState = (0, _react.useState)(''), _useState2 = _slicedToArray(_useState, 2), recipient = _useState2[0], setRecipient = _useState2[1];
+    var _useState3 = (0, _react.useState)(0), _useState4 = _slicedToArray(_useState3, 2), amount = _useState4[0], setAmount = _useState4[1];
+    var navigate = (0, _reactRouterDom.useNavigate)();
+    var updateRecipient = function updateRecipient(event) {
+        setRecipient(event.target.value);
+    };
+    var updateAmount = function updateAmount(event) {
+        setAmount(Number(event.target.value));
+    };
+    var conductTransaction = function conductTransaction() {
+        fetch('http://localhost:3000/api/transact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                recipient: recipient,
+                amount: amount
+            })
+        }).then(function(response) {
+            return response.json();
+        }).then(function(json) {
+            alert(json.message || json.type);
+            navigate('/transaction-pool');
+        });
+    };
+    console.log('recipient', recipient);
+    console.log('amount', amount);
+    return(/*#__PURE__*/ _react.default.createElement("div", {
+        className: "ConductTransaction"
+    }, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
+        to: "/"
+    }, "Home"), /*#__PURE__*/ _react.default.createElement("h3", null, "Conduct a Transaction"), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormGroup, null, /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "text",
+        placeholder: "recipient",
+        value: recipient,
+        onChange: updateRecipient
+    })), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormGroup, null, /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "number",
+        placeholder: "amount",
+        value: amount,
+        onChange: updateAmount
+    })), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
+        bsstyle: "primary",
+        onClick: conductTransaction
+    }, "Submit"))));
+}
+_c = ConductTransaction;
 var _default = ConductTransaction;
 exports.default = _default;
+var _c;
+$RefreshReg$(_c, "ConductTransaction");
 
   $parcel$ReactRefreshHelpers$787b.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","react-bootstrap":"3AD9A","react-router-dom":"fdOAw","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../history":"fxKik"}],"5ye4f":[function(require,module,exports) {
+},{"react":"21dqq","react-bootstrap":"3AD9A","react-router-dom":"fdOAw","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"5ye4f":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$2a20 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;

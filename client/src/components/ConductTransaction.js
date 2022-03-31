@@ -1,21 +1,22 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {FormGroup, FormControl, Button} from "react-bootstrap";
-import {Link} from "react-router-dom";
-import history from "../history";
+import {Link,useNavigate} from "react-router-dom";
 
-class ConductTransaction extends Component {
-  state = {recipient: '', amount: 0};
+function ConductTransaction()  {
+    const [recipient,setRecipient] = useState('');
+    const [amount,setAmount] = useState(0);
+    const navigate = useNavigate();
 
-  updateRecipient = event => {
-      this.setState({recipient: event.target.value});
+  const updateRecipient = event => {
+      setRecipient(event.target.value);
   }
 
-  updateAmount = event => {
-        this.setState({amount: Number(event.target.value)});
+  const updateAmount = event => {
+        setAmount(Number(event.target.value));
   }
 
-  conductTransaction = () => {
-      const {recipient, amount} = this.state;
+  const conductTransaction = () => {
+
 
       fetch('http://localhost:3000/api/transact',{
           method: 'POST',
@@ -24,12 +25,12 @@ class ConductTransaction extends Component {
       }).then(response => response.json())
           .then(json => {
               alert(json.message || json.type);
-              history.push('/transaction-pool');
+              navigate('/transaction-pool');
           })
   }
 
-  render() {
-      console.log('this.state', this.state);
+        console.log('recipient', recipient);
+        console.log('amount', amount);
 
       return (
           <div className='ConductTransaction'>
@@ -39,29 +40,29 @@ class ConductTransaction extends Component {
                  <FormControl
                     input = 'text'
                     placeholder='recipient'
-                    value={this.state.recipient}
-                    onChange={this.updateRecipient}
+                    value={recipient}
+                    onChange={updateRecipient}
                  />
              </FormGroup>
               <FormGroup>
                   <FormControl
                       input = 'number'
                       placeholder='amount'
-                      value={this.state.amount}
-                      onChange={this.updateAmount}
+                      value={amount}
+                      onChange={updateAmount}
                   />
               </FormGroup>
               <div>
                   <Button
                     bsstyle='primary'
-                    onClick={this.conductTransaction}
+                    onClick={conductTransaction}
                   >
                       Submit
                   </Button>
               </div>
           </div>
       )
-  }
-};
+
+}
 
 export default ConductTransaction;
