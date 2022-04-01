@@ -1,29 +1,33 @@
-import React, {Component} from "react";
+import React, {useState,useEffect} from "react";
 import {Link} from "react-router-dom";
 import Transaction from "./Transaction";
 
-class TransactionPool extends Component {
-    state = {transactionPoolMap: {}};
+function TransactionPool() {
+    const [transactionPoolMap,setTransactionPoolMap] = useState({});
 
-    fetchTransactionPoolMap = () => {
+    const fetchTransactionPoolMap = () => {
         fetch('http://localhost:3000/api/transaction-pool-map',{
             method: "GET",
             headers: {'Content-Type': 'application/json'}
         }).then(response => response.json())
-            .then(json => this.setState({transactionPoolMap: json}));
+            .then(json => setTransactionPoolMap( json));
+
     }
 
-    componentDidMount() {
-        this.fetchTransactionPoolMap();
-    }
+    useEffect(() => {
+        let abortController = new AbortController();
+        fetchTransactionPoolMap();
+        return () => {
+            abortController.abort();
+        }
+    },[])
 
-    render() {
         return (
             <div className='TransactionPool'>
                 <div><Link to='/'>Home</Link></div>
                 <h3>Transaction Pool</h3>
                 {
-                    Object.values(this.state.transactionPoolMap).map(transaction => {
+                    Object.values(transactionPoolMap).map(transaction => {
                         return (
                             <div key={transaction.id}>
                                 <hr />
@@ -34,7 +38,7 @@ class TransactionPool extends Component {
                 }
             </div>
         )
-    }
+
 }
 
 export default TransactionPool

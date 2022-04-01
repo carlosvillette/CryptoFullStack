@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {FormGroup, FormControl, Button} from "react-bootstrap";
 import {Link,useNavigate} from "react-router-dom";
 
-function ConductTransaction()  {
+const ConductTransaction = () => {
     const [recipient,setRecipient] = useState('');
     const [amount,setAmount] = useState(0);
     const navigate = useNavigate();
