@@ -18,7 +18,7 @@ const ConductTransaction = () => {
   const conductTransaction = () => {
 
 
-      fetch('http://localhost:3000/api/transact',{
+      fetch(`${document.location.origin}/api/transact`,{ // due to CORS issue
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({recipient, amount})

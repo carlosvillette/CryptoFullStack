@@ -23970,7 +23970,8 @@ var App = function App() {
     }), _useState2 = _slicedToArray(_useState, 2), walletInfo = _useState2[0], setWalletInfo = _useState2[1];
     (0, _react.useEffect)(function() {
         var abortController = new AbortController();
-        fetch('http://localhost:3000/api/wallet-info').then(function(response) {
+        fetch("".concat(document.location.origin, "/api/wallet-info")) //due to CORS issue
+        .then(function(response) {
             return response.json();
         }).then(function(json) {
             return setWalletInfo(json);
@@ -24267,7 +24268,8 @@ function _arrayWithHoles(arr) {
 var Blocks = function Blocks() {
     var _useState = (0, _react.useState)([]), _useState2 = _slicedToArray(_useState, 2), blocks = _useState2[0], setBlocks = _useState2[1];
     (0, _react.useEffect)(function() {
-        fetch('http://localhost:3000/api/blockchain').then(function(response) {
+        fetch("".concat(document.location.origin, "/api/blockchain")) //due to CORS issue
+        .then(function(response) {
             return response.json();
         }).then(function(json) {
             return setBlocks(json);
@@ -37956,7 +37958,8 @@ var ConductTransaction = function ConductTransaction() {
         setAmount(Number(event.target.value));
     };
     var conductTransaction = function conductTransaction() {
-        fetch('http://localhost:3000/api/transact', {
+        fetch("".concat(document.location.origin, "/api/transact"), {
+            // due to CORS issue
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -38104,11 +38107,13 @@ function _iterableToArrayLimit(arr, i) {
 function _arrayWithHoles(arr) {
     if (Array.isArray(arr)) return arr;
 }
+var POLL_INTERVAL_MS = 10000;
 function TransactionPool() {
     var _useState = (0, _react.useState)({
     }), _useState2 = _slicedToArray(_useState, 2), transactionPoolMap = _useState2[0], setTransactionPoolMap = _useState2[1];
     var fetchTransactionPoolMap = function fetchTransactionPoolMap() {
-        fetch('http://localhost:3000/api/transaction-pool-map', {
+        fetch("".concat(document.location.origin, "/api/transaction-pool-map"), {
+            // due to CORS issue
             method: "GET",
             headers: {
                 'Content-Type': 'application/json'
@@ -38122,7 +38127,11 @@ function TransactionPool() {
     (0, _react.useEffect)(function() {
         var abortController = new AbortController();
         fetchTransactionPoolMap();
+        var fetchPoolMapInterval = setInterval(function() {
+            return fetchTransactionPoolMap();
+        }, POLL_INTERVAL_MS);
         return function() {
+            clearInterval(fetchPoolMapInterval);
             abortController.abort();
         };
     }, []);

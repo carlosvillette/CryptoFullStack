@@ -2,11 +2,13 @@ import React, {useState,useEffect} from "react";
 import {Link} from "react-router-dom";
 import Transaction from "./Transaction";
 
+const   POLL_INTERVAL_MS =10000;
+
 function TransactionPool() {
     const [transactionPoolMap,setTransactionPoolMap] = useState({});
 
     const fetchTransactionPoolMap = () => {
-        fetch('http://localhost:3000/api/transaction-pool-map',{
+        fetch(`${document.location.origin}/api/transaction-pool-map`,{ // due to CORS issue
             method: "GET",
             headers: {'Content-Type': 'application/json'}
         }).then(response => response.json())
@@ -17,7 +19,12 @@ function TransactionPool() {
     useEffect(() => {
         let abortController = new AbortController();
         fetchTransactionPoolMap();
+        const fetchPoolMapInterval = setInterval(
+            () => fetchTransactionPoolMap(),
+            POLL_INTERVAL_MS
+        );
         return () => {
+            clearInterval(fetchPoolMapInterval);
             abortController.abort();
         }
     },[])

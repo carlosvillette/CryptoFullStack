@@ -7,7 +7,7 @@ const App = () => {
 
     useEffect(() => {
         const abortController = new AbortController();
-        fetch('http://localhost:3000/api/wallet-info')
+        fetch(`${document.location.origin}/api/wallet-info`)//due to CORS issue
             .then(response => response.json())
             .then(json => setWalletInfo(json));
 

@@ -5,7 +5,7 @@ const Blocks = () => {
     const [blocks,setBlocks] = useState([]);
 
     useEffect( () => {
-        fetch('http://localhost:3000/api/blockchain')
+        fetch(`${document.location.origin}/api/blockchain`)//due to CORS issue
             .then(response => response.json())
             .then(json => setBlocks(json));
     }, [blocks.length])
