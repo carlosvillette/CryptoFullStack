@@ -9,16 +9,23 @@ const TransactionPool = require('./wallet/transaction-pool');
 const Wallet = require('./wallet/wallet');
 const TransactionMiner = require('./app/transaction-miner');
 
-const app = express();
-const blockchain = new Blockchain();
-const transactionPool = new TransactionPool();
-const wallet = new Wallet();
-const pubsub = new PubSub({blockchain, transactionPool});
-const transactionMiner = new TransactionMiner({blockchain,transactionPool,wallet,pubsub});
+const isDevelopment = process.env.ENV === 'development';
 
 const DEFAULT_PORT = 3000;
 
 const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
+const REDIS_URL = isDevelopment ?
+    'redis://127.0.0.1:6379':
+    'redis://:p11e959fe393cb8d68c995c1509d1d30d91933baa51e2a0bb645f40ce71f068ce@ec2-18-233-11-101.compute-1.amazonaws.com:10599';
+
+const app = express();
+const blockchain = new Blockchain();
+const transactionPool = new TransactionPool();
+const wallet = new Wallet();
+const pubsub = new PubSub({blockchain, transactionPool, redisUrl: REDIS_URL});
+const transactionMiner = new TransactionMiner({blockchain,transactionPool,wallet,pubsub});
+
+
 
 pubsub.connect();
 
@@ -115,44 +122,46 @@ const syncTransaction = () => {
     });
 };
 
-const wallet1 = new Wallet();
-const wallet2 = new Wallet();
+if (isDevelopment) {
+    const wallet1 = new Wallet();
+    const wallet2 = new Wallet();
 
-const generateWalletTransactions = ({wallet, recipient, amount}) => {
-    const  transaction = wallet.createTransaction({
-        recipient, amount, chain: blockchain.chain
+    const generateWalletTransactions = ({wallet, recipient, amount}) => {
+        const transaction = wallet.createTransaction({
+            recipient, amount, chain: blockchain.chain
+        });
+
+        transactionPool.setTransaction(transaction);
+    };
+
+    const walletAction = () => generateWalletTransactions({
+        wallet, recipient: wallet1.publicKey, amount: 5
     });
 
-    transactionPool.setTransaction(transaction);
-};
+    const wallet1Action = () => generateWalletTransactions({
+        wallet: wallet1, recipient: wallet2.publicKey, amount: 10
+    });
 
-const walletAction = () => generateWalletTransactions({
-    wallet, recipient: wallet1.publicKey, amount: 5
-});
+    const wallet2Action = () => generateWalletTransactions({
+        wallet: wallet2, recipient: wallet.publicKey, amount: 15
+    });
 
-const wallet1Action = () => generateWalletTransactions({
-    wallet: wallet1, recipient: wallet2.publicKey, amount: 10
-});
+    for (let i = 0; i < 10; i++) {
+        if (i % 3 == 0) {
+            walletAction();
+            wallet1Action();
+        } else if (i % 3 == 1) {
+            walletAction();
+            wallet2Action()
+        } else {
+            wallet1Action();
+            wallet2Action();
+        }
 
-const wallet2Action = () => generateWalletTransactions({
-    wallet: wallet2, recipient: wallet.publicKey, amount: 15
-});
-
-for (let i=0; i<10; i++) {
-    if (i%3 == 0) {
-        walletAction();
-        wallet1Action();
-    } else if (i%3==1) {
-        walletAction();
-        wallet2Action()
-    } else {
-        wallet1Action();
-        wallet2Action();
+        transactionMiner.mineTransaction();
     }
 
-    transactionMiner.mineTransaction();
 }
-
 let PEER_PORT;
 
 if (process.env.GENERATE_PEER_PORT ==='true') {
@@ -160,7 +169,8 @@ if (process.env.GENERATE_PEER_PORT ==='true') {
     PEER_PORT = DEFAULT_PORT + Math.ceil(Math.random() * 1000);
 }
 // if PEER_PORT is undefined, DEFAULT_PORT will be selected instead
-const PORT = PEER_PORT || DEFAULT_PORT;
+// process.env.PORT is for heroku
+const PORT = process.env.PORT || PEER_PORT || DEFAULT_PORT;
 app.listen(PORT, () => {
     console.log(`listening at localhost:${PORT}`);
     // no reason for root node to sync with itself

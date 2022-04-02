@@ -9,9 +9,9 @@
   },
   "scripts": {
     "test": "jest --watchAll",
-    "start": "npm run build-client && node index.js",
-    "dev": "npm run dev-client & npm run start-pubsub && nodemon index.js",
-    "dev-peer": "cross-env GENERATE_PEER_PORT='true' nodemon index.js",
+    "start": "npm run build-client & node index.js",
+    "dev": "npm run dev-client & npm run start-pubsub && cross-env ENV='development' nodemon index.js",
+    "dev-peer": "cross-env GENERATE_PEER_PORT='true' ENV='development' nodemon index.js",
     "start-pubsub": "redis-server --daemonize yes",
     "end-pubsub": "killall redis-server",
     "build-client": "npm run clean && parcel build client/src/index.html --dist-dir client/dist",
