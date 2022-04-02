@@ -1,24 +1,24 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {Button} from "react-bootstrap";
 import Transaction from "./Transaction";
 
-class Block extends Component {
-    state = {displayTransaction: false};
+const Block = props => {
+    const  [displayTransaction,setDisplayTransaction] = useState(false);
 
-    toggleTransaction = () => {
-        this.setState({displayTransaction: !this.state.displayTransaction});
+    const toggleTransaction = () => {
+        setDisplayTransaction(!displayTransaction);
     };
 
-    get displayTransaction () {
-        const {data} = this.props.block;
+    const DisplayTransactions = () => {
+        const {data} = props.block;
 
         const stringifiedData = JSON.stringify(data);
 
-        const dataDisplay = !this.state.displayTransaction ?
+        const dataDisplay = !displayTransaction ?
             `${stringifiedData.substring(0,35)}...` :
             stringifiedData;
 
-        if (this.state.displayTransaction) {
+        if (displayTransaction) {
             return (
                 <div>
                     {
@@ -31,9 +31,9 @@ class Block extends Component {
                     }
                     <br/>
                     <Button
-                        bsStyle='danger'
-                        bsSize='small'
-                        onClick={this.toggleTransaction}
+                        bsstyle='danger'
+                        bssize='small'
+                        onClick={toggleTransaction}
                     >
                         Show Less
                     </Button>
@@ -45,9 +45,9 @@ class Block extends Component {
             <div>
                 <div>Data: {dataDisplay}</div>
                 <Button
-                    bsStyle='danger'
-                    bsSize='small'
-                    onClick={this.toggleTransaction}
+                    bsstyle='danger'
+                    bssize='small'
+                    onClick={toggleTransaction}
                 >
                     Show More
                 </Button>
@@ -55,8 +55,7 @@ class Block extends Component {
         );
     }
 
-    render() {
-        const {timestamp, hash} = this.props.block;
+        const {timestamp, hash} = props.block;
 
         const hashDisplay = `${hash.substring(0,15)}...`;
 
@@ -64,10 +63,10 @@ class Block extends Component {
             <div className='Block'>
                 <div>Hash: {hashDisplay}</div>
                 <div>Timestamp: {new Date(timestamp).toLocaleString()}</div>
-                {this.displayTransaction}
+                <DisplayTransactions/>
             </div>
         )
-    }
+
 }
 
 

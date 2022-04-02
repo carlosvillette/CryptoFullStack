@@ -1010,6 +1010,8 @@ var _reactRouterDom = require("react-router-dom");
 var _history = _interopRequireDefault(require("./history"));
 var _App = _interopRequireDefault(require("./components/App"));
 var _Blocks = _interopRequireDefault(require("./components/Blocks"));
+var _ConductTransaction = _interopRequireDefault(require("./components/ConductTransaction"));
+var _TransactionPool = _interopRequireDefault(require("./components/TransactionPool"));
 require("./index.css");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -1017,13 +1019,20 @@ function _interopRequireDefault(obj) {
     };
 }
 (0, _reactDom.render)(/*#__PURE__*/ _react.default.createElement(_reactRouterDom.BrowserRouter, {
-    history: _history.default
+    history: _history.default,
+    forceRefresh: true
 }, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Routes, null, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Route, {
     path: "/",
     element: /*#__PURE__*/ _react.default.createElement(_App.default, null)
 }), /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Route, {
     path: "/blocks",
     element: /*#__PURE__*/ _react.default.createElement(_Blocks.default, null)
+}), /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Route, {
+    path: "/conduct-transaction",
+    element: /*#__PURE__*/ _react.default.createElement(_ConductTransaction.default, null)
+}), /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Route, {
+    path: "/transaction-pool",
+    element: /*#__PURE__*/ _react.default.createElement(_TransactionPool.default, null)
 }))), document.getElementById('root'));
 
   $parcel$ReactRefreshHelpers$ffae.postlude(module);
@@ -1031,7 +1040,7 @@ function _interopRequireDefault(obj) {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","react-dom":"j6uA9","react-router-dom":"fdOAw","./history":"fxKik","./components/App":"ifYPa","./components/Blocks":"gec3j","./index.css":"b8ft2","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"21dqq":[function(require,module,exports) {
+},{"react":"21dqq","react-dom":"j6uA9","react-router-dom":"fdOAw","./history":"fxKik","./components/App":"ifYPa","./components/Blocks":"gec3j","./index.css":"b8ft2","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./components/ConductTransaction":"8QY9t","./components/TransactionPool":"5ye4f"}],"21dqq":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react.development.js');
 
@@ -23910,146 +23919,88 @@ function _interopRequireWildcard(obj, nodeInterop) {
     if (cache) cache.set(obj, newObj);
     return newObj;
 }
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    Object.defineProperty(Constructor, "prototype", {
-        writable: false
-    });
-    return Constructor;
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-            value: subClass,
-            writable: true,
-            configurable: true
-        }
-    });
-    Object.defineProperty(subClass, "prototype", {
-        writable: false
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
 }
-function _setPrototypeOf(o1, p1) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-        o.__proto__ = p;
-        return o;
-    };
-    return _setPrototypeOf(o1, p1);
-}
-function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-    return function _createSuperInternal() {
-        var Super = _getPrototypeOf(Derived), result;
-        if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-        } else result = Super.apply(this, arguments);
-        return _possibleConstructorReturn(this, result);
-    };
-}
-function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
-    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
-    return _assertThisInitialized(self);
-}
-function _assertThisInitialized(self) {
-    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    return self;
-}
-function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
     try {
-        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-        }));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-function _getPrototypeOf(o2) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o);
-    };
-    return _getPrototypeOf(o2);
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-var App = /*#__PURE__*/ function(_Component) {
-    _inherits(App1, _Component);
-    var _super = _createSuper(App1);
-    function App1() {
-        var _this;
-        _classCallCheck(this, App1);
-        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++)args[_key] = arguments[_key];
-        _this = _super.call.apply(_super, [
-            this
-        ].concat(args));
-        _defineProperty(_assertThisInitialized(_this), "state", {
-            walletInfo: {
-            }
-        });
-        return _this;
-    }
-    _createClass(App1, [
-        {
-            key: "componentDidMount",
-            value: function componentDidMount() {
-                var _this2 = this;
-                fetch('http://localhost:3000/api/wallet-info').then(function(response) {
-                    return response.json();
-                }).then(function(json) {
-                    return _this2.setState({
-                        walletInfo: json
-                    });
-                });
-            }
-        },
-        {
-            key: "render",
-            value: function render() {
-                var _this$state$walletInf = this.state.walletInfo, address = _this$state$walletInf.address, balance = _this$state$walletInf.balance;
-                return(/*#__PURE__*/ _react.default.createElement("div", {
-                    className: "App"
-                }, /*#__PURE__*/ _react.default.createElement("img", {
-                    className: "logo",
-                    src: _block.default
-                }), /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement("div", null, "Welcome to the blockchain!"), /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
-                    to: "/blocks"
-                }, "Blocks")), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement("div", {
-                    className: "WalletInfo"
-                }, /*#__PURE__*/ _react.default.createElement("div", null, "Address: ", address), /*#__PURE__*/ _react.default.createElement("div", null, "Balance: ", balance)))));
-            }
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
         }
-    ]);
-    return App1;
-}(_react.Component);
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+var App = function App() {
+    var _useState = (0, _react.useState)({
+    }), _useState2 = _slicedToArray(_useState, 2), walletInfo = _useState2[0], setWalletInfo = _useState2[1];
+    (0, _react.useEffect)(function() {
+        var abortController = new AbortController();
+        fetch("".concat(document.location.origin, "/api/wallet-info")) //due to CORS issue
+        .then(function(response) {
+            return response.json();
+        }).then(function(json) {
+            return setWalletInfo(json);
+        });
+        return function() {
+            abortController.abort();
+        };
+    }, []);
+    var address = walletInfo.address, balance = walletInfo.balance;
+    return(/*#__PURE__*/ _react.default.createElement("div", {
+        className: "App"
+    }, /*#__PURE__*/ _react.default.createElement("img", {
+        className: "logo",
+        src: _block.default
+    }), /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement("div", null, "Welcome to the blockchain!"), /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
+        to: "/blocks"
+    }, "Blocks")), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
+        to: "/conduct-transaction"
+    }, "Conduct a Transaction")), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
+        to: "/transaction-pool"
+    }, "Transaction Pool")), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement("div", {
+        className: "WalletInfo"
+    }, /*#__PURE__*/ _react.default.createElement("div", null, "Address: ", address), /*#__PURE__*/ _react.default.createElement("div", null, "Balance: ", balance)))));
+};
+_c = App;
 var _default = App;
 exports.default = _default;
+var _c;
+$RefreshReg$(_c, "App");
 
   $parcel$ReactRefreshHelpers$84ad.postlude(module);
 } finally {
@@ -24268,143 +24219,81 @@ function _interopRequireWildcard(obj, nodeInterop) {
     if (cache) cache.set(obj, newObj);
     return newObj;
 }
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    Object.defineProperty(Constructor, "prototype", {
-        writable: false
-    });
-    return Constructor;
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-            value: subClass,
-            writable: true,
-            configurable: true
-        }
-    });
-    Object.defineProperty(subClass, "prototype", {
-        writable: false
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
 }
-function _setPrototypeOf(o1, p1) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-        o.__proto__ = p;
-        return o;
-    };
-    return _setPrototypeOf(o1, p1);
-}
-function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-    return function _createSuperInternal() {
-        var Super = _getPrototypeOf(Derived), result;
-        if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-        } else result = Super.apply(this, arguments);
-        return _possibleConstructorReturn(this, result);
-    };
-}
-function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
-    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
-    return _assertThisInitialized(self);
-}
-function _assertThisInitialized(self) {
-    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    return self;
-}
-function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
     try {
-        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-        }));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-function _getPrototypeOf(o2) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o);
-    };
-    return _getPrototypeOf(o2);
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-var Blocks = /*#__PURE__*/ function(_Component) {
-    _inherits(Blocks1, _Component);
-    var _super = _createSuper(Blocks1);
-    function Blocks1() {
-        var _this;
-        _classCallCheck(this, Blocks1);
-        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++)args[_key] = arguments[_key];
-        _this = _super.call.apply(_super, [
-            this
-        ].concat(args));
-        _defineProperty(_assertThisInitialized(_this), "state", {
-            blocks: []
-        });
-        return _this;
-    }
-    _createClass(Blocks1, [
-        {
-            key: "componentDidMount",
-            value: function componentDidMount() {
-                var _this2 = this;
-                fetch('http://localhost:3000/api/blockchain').then(function(response) {
-                    return response.json();
-                }).then(function(json) {
-                    return _this2.setState({
-                        blocks: json
-                    });
-                });
-            }
-        },
-        {
-            key: "render",
-            value: function render() {
-                console.log('this.state', this.state);
-                return(/*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
-                    to: "/"
-                }, "Home")), /*#__PURE__*/ _react.default.createElement("h3", null, "Blocks"), this.state.blocks.map(function(block) {
-                    return(/*#__PURE__*/ _react.default.createElement(_Block.default, {
-                        key: block.hash,
-                        block: block
-                    }));
-                })));
-            }
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
         }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+var Blocks = function Blocks() {
+    var _useState = (0, _react.useState)([]), _useState2 = _slicedToArray(_useState, 2), blocks = _useState2[0], setBlocks = _useState2[1];
+    (0, _react.useEffect)(function() {
+        fetch("".concat(document.location.origin, "/api/blockchain")) //due to CORS issue
+        .then(function(response) {
+            return response.json();
+        }).then(function(json) {
+            return setBlocks(json);
+        });
+    }, [
+        blocks.length
     ]);
-    return Blocks1;
-}(_react.Component);
+    console.log('blocks', blocks);
+    return(/*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
+        to: "/"
+    }, "Home")), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
+        to: "/conduct-transaction"
+    }, "Conduct a Transaction")), /*#__PURE__*/ _react.default.createElement("h3", null, "Blocks"), blocks.map(function(block) {
+        return(/*#__PURE__*/ _react.default.createElement(_Block.default, {
+            key: block.hash,
+            block: block
+        }));
+    })));
+};
+_c = Blocks;
 var _default = Blocks;
 exports.default = _default;
+var _c;
+$RefreshReg$(_c, "Blocks");
 
   $parcel$ReactRefreshHelpers$e429.postlude(module);
 } finally {
@@ -24465,155 +24354,89 @@ function _interopRequireWildcard(obj, nodeInterop) {
     if (cache) cache.set(obj, newObj);
     return newObj;
 }
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    Object.defineProperty(Constructor, "prototype", {
-        writable: false
-    });
-    return Constructor;
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-            value: subClass,
-            writable: true,
-            configurable: true
-        }
-    });
-    Object.defineProperty(subClass, "prototype", {
-        writable: false
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
 }
-function _setPrototypeOf(o1, p1) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-        o.__proto__ = p;
-        return o;
-    };
-    return _setPrototypeOf(o1, p1);
-}
-function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-    return function _createSuperInternal() {
-        var Super = _getPrototypeOf(Derived), result;
-        if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-        } else result = Super.apply(this, arguments);
-        return _possibleConstructorReturn(this, result);
-    };
-}
-function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
-    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
-    return _assertThisInitialized(self);
-}
-function _assertThisInitialized(self) {
-    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    return self;
-}
-function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
     try {
-        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-        }));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-function _getPrototypeOf(o2) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o);
-    };
-    return _getPrototypeOf(o2);
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-var Block = /*#__PURE__*/ function(_Component) {
-    _inherits(Block1, _Component);
-    var _super = _createSuper(Block1);
-    function Block1() {
-        var _this;
-        _classCallCheck(this, Block1);
-        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++)args[_key] = arguments[_key];
-        _this = _super.call.apply(_super, [
-            this
-        ].concat(args));
-        _defineProperty(_assertThisInitialized(_this), "state", {
-            displayTransaction: false
-        });
-        _defineProperty(_assertThisInitialized(_this), "toggleTransaction", function() {
-            _this.setState({
-                displayTransaction: !_this.state.displayTransaction
-            });
-        });
-        return _this;
-    }
-    _createClass(Block1, [
-        {
-            key: "displayTransaction",
-            get: function get() {
-                var data = this.props.block.data;
-                var stringifiedData = JSON.stringify(data);
-                var dataDisplay = !this.state.displayTransaction ? "".concat(stringifiedData.substring(0, 35), "...") : stringifiedData;
-                if (this.state.displayTransaction) return(/*#__PURE__*/ _react.default.createElement("div", null, data.map(function(transaction) {
-                    return(/*#__PURE__*/ _react.default.createElement("div", {
-                        key: transaction.id
-                    }, /*#__PURE__*/ _react.default.createElement("hr", null), /*#__PURE__*/ _react.default.createElement(_Transaction.default, {
-                        transaction: transaction
-                    })));
-                }), /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
-                    bsStyle: "danger",
-                    bsSize: "small",
-                    onClick: this.toggleTransaction
-                }, "Show Less")));
-                return(/*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement("div", null, "Data: ", dataDisplay), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
-                    bsStyle: "danger",
-                    bsSize: "small",
-                    onClick: this.toggleTransaction
-                }, "Show More")));
-            }
-        },
-        {
-            key: "render",
-            value: function render() {
-                var _this$props$block = this.props.block, timestamp = _this$props$block.timestamp, hash = _this$props$block.hash;
-                var hashDisplay = "".concat(hash.substring(0, 15), "...");
-                return(/*#__PURE__*/ _react.default.createElement("div", {
-                    className: "Block"
-                }, /*#__PURE__*/ _react.default.createElement("div", null, "Hash: ", hashDisplay), /*#__PURE__*/ _react.default.createElement("div", null, "Timestamp: ", new Date(timestamp).toLocaleString()), this.displayTransaction));
-            }
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
         }
-    ]);
-    return Block1;
-}(_react.Component);
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+var Block = function Block(props) {
+    var _useState = (0, _react.useState)(false), _useState2 = _slicedToArray(_useState, 2), displayTransaction = _useState2[0], setDisplayTransaction = _useState2[1];
+    var toggleTransaction = function toggleTransaction() {
+        setDisplayTransaction(!displayTransaction);
+    };
+    var DisplayTransactions = function DisplayTransactions() {
+        var data = props.block.data;
+        var stringifiedData = JSON.stringify(data);
+        var dataDisplay = !displayTransaction ? "".concat(stringifiedData.substring(0, 35), "...") : stringifiedData;
+        if (displayTransaction) return(/*#__PURE__*/ _react.default.createElement("div", null, data.map(function(transaction) {
+            return(/*#__PURE__*/ _react.default.createElement("div", {
+                key: transaction.id
+            }, /*#__PURE__*/ _react.default.createElement("hr", null), /*#__PURE__*/ _react.default.createElement(_Transaction.default, {
+                transaction: transaction
+            })));
+        }), /*#__PURE__*/ _react.default.createElement("br", null), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
+            bsstyle: "danger",
+            bssize: "small",
+            onClick: toggleTransaction
+        }, "Show Less")));
+        return(/*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement("div", null, "Data: ", dataDisplay), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
+            bsstyle: "danger",
+            bssize: "small",
+            onClick: toggleTransaction
+        }, "Show More")));
+    };
+    var _props$block = props.block, timestamp = _props$block.timestamp, hash = _props$block.hash;
+    var hashDisplay = "".concat(hash.substring(0, 15), "...");
+    return(/*#__PURE__*/ _react.default.createElement("div", {
+        className: "Block"
+    }, /*#__PURE__*/ _react.default.createElement("div", null, "Hash: ", hashDisplay), /*#__PURE__*/ _react.default.createElement("div", null, "Timestamp: ", new Date(timestamp).toLocaleString()), /*#__PURE__*/ _react.default.createElement(DisplayTransactions, null)));
+};
+_c = Block;
 var _default = Block;
 exports.default = _default;
+var _c;
+$RefreshReg$(_c, "Block");
 
   $parcel$ReactRefreshHelpers$765c.postlude(module);
 } finally {
@@ -38029,6 +37852,326 @@ $RefreshReg$(_c, "Transaction");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"b8ft2":[function() {},{}]},["kn9T2","8rmpt","iXgNX"], "iXgNX", "parcelRequire17cc")
+},{"react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"b8ft2":[function() {},{}],"8QY9t":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$787b = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$787b.prelude(module);
+
+try {
+"use strict";
+function _typeof(obj1) {
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj1);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = void 0;
+var _react = _interopRequireWildcard(require("react"));
+var _reactBootstrap = require("react-bootstrap");
+var _reactRouterDom = require("react-router-dom");
+function _getRequireWildcardCache(nodeInterop1) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop1);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        default: obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {
+    };
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj.default = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
+    try {
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
+        }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+var ConductTransaction = function ConductTransaction() {
+    var _useState = (0, _react.useState)(''), _useState2 = _slicedToArray(_useState, 2), recipient = _useState2[0], setRecipient = _useState2[1];
+    var _useState3 = (0, _react.useState)(0), _useState4 = _slicedToArray(_useState3, 2), amount = _useState4[0], setAmount = _useState4[1];
+    var navigate = (0, _reactRouterDom.useNavigate)();
+    var updateRecipient = function updateRecipient(event) {
+        setRecipient(event.target.value);
+    };
+    var updateAmount = function updateAmount(event) {
+        setAmount(Number(event.target.value));
+    };
+    var conductTransaction = function conductTransaction() {
+        fetch("".concat(document.location.origin, "/api/transact"), {
+            // due to CORS issue
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                recipient: recipient,
+                amount: amount
+            })
+        }).then(function(response) {
+            return response.json();
+        }).then(function(json) {
+            alert(json.message || json.type);
+            navigate('/transaction-pool');
+        });
+    };
+    console.log('recipient', recipient);
+    console.log('amount', amount);
+    return(/*#__PURE__*/ _react.default.createElement("div", {
+        className: "ConductTransaction"
+    }, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
+        to: "/"
+    }, "Home"), /*#__PURE__*/ _react.default.createElement("h3", null, "Conduct a Transaction"), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormGroup, null, /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "text",
+        placeholder: "recipient",
+        value: recipient,
+        onChange: updateRecipient
+    })), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormGroup, null, /*#__PURE__*/ _react.default.createElement(_reactBootstrap.FormControl, {
+        input: "number",
+        placeholder: "amount",
+        value: amount,
+        onChange: updateAmount
+    })), /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
+        bsstyle: "primary",
+        onClick: conductTransaction
+    }, "Submit"))));
+};
+_c = ConductTransaction;
+var _default = ConductTransaction;
+exports.default = _default;
+var _c;
+$RefreshReg$(_c, "ConductTransaction");
+
+  $parcel$ReactRefreshHelpers$787b.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"21dqq","react-bootstrap":"3AD9A","react-router-dom":"fdOAw","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"5ye4f":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$2a20 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$2a20.prelude(module);
+
+try {
+"use strict";
+function _typeof(obj1) {
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+    } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj1);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = void 0;
+var _react = _interopRequireWildcard(require("react"));
+var _reactBootstrap = require("react-bootstrap");
+var _reactRouterDom = require("react-router-dom");
+var _Transaction = _interopRequireDefault(require("./Transaction"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        default: obj
+    };
+}
+function _getRequireWildcardCache(nodeInterop1) {
+    if (typeof WeakMap !== "function") return null;
+    var cacheBabelInterop = new WeakMap();
+    var cacheNodeInterop = new WeakMap();
+    return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+        return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+    })(nodeInterop1);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+    if (!nodeInterop && obj && obj.__esModule) return obj;
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") return {
+        default: obj
+    };
+    var cache = _getRequireWildcardCache(nodeInterop);
+    if (cache && cache.has(obj)) return cache.get(obj);
+    var newObj = {
+    };
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for(var key in obj)if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) Object.defineProperty(newObj, key, desc);
+        else newObj[key] = obj[key];
+    }
+    newObj.default = obj;
+    if (cache) cache.set(obj, newObj);
+    return newObj;
+}
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _s, _e;
+    try {
+        for(_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true){
+            _arr.push(_s.value);
+            if (i && _arr.length === i) break;
+        }
+    } catch (err) {
+        _d = true;
+        _e = err;
+    } finally{
+        try {
+            if (!_n && _i["return"] != null) _i["return"]();
+        } finally{
+            if (_d) throw _e;
+        }
+    }
+    return _arr;
+}
+function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+}
+var POLL_INTERVAL_MS = 10000;
+function TransactionPool() {
+    var _useState = (0, _react.useState)({
+    }), _useState2 = _slicedToArray(_useState, 2), transactionPoolMap = _useState2[0], setTransactionPoolMap = _useState2[1];
+    var navigate = (0, _reactRouterDom.useNavigate)();
+    var fetchTransactionPoolMap = function fetchTransactionPoolMap() {
+        fetch("".concat(document.location.origin, "/api/transaction-pool-map"), {
+            // due to CORS issue
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function(response) {
+            return response.json();
+        }).then(function(json) {
+            return setTransactionPoolMap(json);
+        });
+    };
+    var fetchMineTransactions = function fetchMineTransactions() {
+        fetch("".concat(document.location.origin, "/api/mine-transactions")).then(function(response) {
+            if (response.status === 200) {
+                alert('success');
+                navigate('/blocks');
+            } else alert('mine-transactions block request did not complete.');
+        });
+    };
+    (0, _react.useEffect)(function() {
+        var abortController = new AbortController();
+        fetchTransactionPoolMap();
+        var fetchPoolMapInterval = setInterval(function() {
+            return fetchTransactionPoolMap();
+        }, POLL_INTERVAL_MS);
+        return function() {
+            clearInterval(fetchPoolMapInterval);
+            abortController.abort();
+        };
+    }, []);
+    return(/*#__PURE__*/ _react.default.createElement("div", {
+        className: "TransactionPool"
+    }, /*#__PURE__*/ _react.default.createElement("div", null, /*#__PURE__*/ _react.default.createElement(_reactRouterDom.Link, {
+        to: "/"
+    }, "Home")), /*#__PURE__*/ _react.default.createElement("h3", null, "Transaction Pool"), Object.values(transactionPoolMap).map(function(transaction) {
+        return(/*#__PURE__*/ _react.default.createElement("div", {
+            key: transaction.id
+        }, /*#__PURE__*/ _react.default.createElement("hr", null), /*#__PURE__*/ _react.default.createElement(_Transaction.default, {
+            transaction: transaction
+        })));
+    }), /*#__PURE__*/ _react.default.createElement("hr", null), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
+        bsstyle: "danger",
+        bssize: "small",
+        onClick: fetchMineTransactions
+    }, "Mine the Transaction")));
+}
+_c = TransactionPool;
+var _default = TransactionPool;
+exports.default = _default;
+var _c;
+$RefreshReg$(_c, "TransactionPool");
+
+  $parcel$ReactRefreshHelpers$2a20.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"21dqq","react-router-dom":"fdOAw","./Transaction":"jLraF","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap":"3AD9A"}]},["kn9T2","8rmpt","iXgNX"], "iXgNX", "parcelRequire17cc")
 
 //# sourceMappingURL=index.764980e3.js.map

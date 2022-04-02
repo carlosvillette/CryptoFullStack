@@ -1,23 +1,23 @@
-import React, {Component} from "react";
+import React, {useState,useEffect} from "react";
 import {Link} from "react-router-dom";
 import Block from "./Block";
-class Blocks extends Component {
-    state = {blocks: []};
+const Blocks = () => {
+    const [blocks,setBlocks] = useState([]);
 
-    componentDidMount() {
-        fetch('http://localhost:3000/api/blockchain')
+    useEffect( () => {
+        fetch(`${document.location.origin}/api/blockchain`)//due to CORS issue
             .then(response => response.json())
-            .then(json => this.setState({blocks: json}));
-    }
+            .then(json => setBlocks(json));
+    }, [blocks.length])
 
-    render() {
-        console.log('this.state', this.state);
+        console.log('blocks', blocks);
         return (
             <div>
                 <div><Link to='/'>Home</Link></div>
+                <div><Link to='/conduct-transaction'>Conduct a Transaction</Link></div>
                 <h3>Blocks</h3>
                 {
-                    this.state.blocks.map(block => {
+                    blocks.map(block => {
                         return (
                             <Block key={block.hash} block={block} />
                         );
@@ -25,7 +25,7 @@ class Blocks extends Component {
                 }
             </div>
         );
-    }
+
 };
 
 export default Blocks;
