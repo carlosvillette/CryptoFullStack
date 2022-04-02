@@ -38027,6 +38027,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
+var _reactBootstrap = require("react-bootstrap");
 var _reactRouterDom = require("react-router-dom");
 var _Transaction = _interopRequireDefault(require("./Transaction"));
 function _interopRequireDefault(obj) {
@@ -38111,6 +38112,7 @@ var POLL_INTERVAL_MS = 10000;
 function TransactionPool() {
     var _useState = (0, _react.useState)({
     }), _useState2 = _slicedToArray(_useState, 2), transactionPoolMap = _useState2[0], setTransactionPoolMap = _useState2[1];
+    var navigate = (0, _reactRouterDom.useNavigate)();
     var fetchTransactionPoolMap = function fetchTransactionPoolMap() {
         fetch("".concat(document.location.origin, "/api/transaction-pool-map"), {
             // due to CORS issue
@@ -38122,6 +38124,14 @@ function TransactionPool() {
             return response.json();
         }).then(function(json) {
             return setTransactionPoolMap(json);
+        });
+    };
+    var fetchMineTransactions = function fetchMineTransactions() {
+        fetch("".concat(document.location.origin, "/api/mine-transactions")).then(function(response) {
+            if (response.status === 200) {
+                alert('success');
+                navigate('/blocks');
+            } else alert('mine-transactions block request did not complete.');
         });
     };
     (0, _react.useEffect)(function() {
@@ -38145,7 +38155,11 @@ function TransactionPool() {
         }, /*#__PURE__*/ _react.default.createElement("hr", null), /*#__PURE__*/ _react.default.createElement(_Transaction.default, {
             transaction: transaction
         })));
-    })));
+    }), /*#__PURE__*/ _react.default.createElement("hr", null), /*#__PURE__*/ _react.default.createElement(_reactBootstrap.Button, {
+        bsstyle: "danger",
+        bssize: "small",
+        onClick: fetchMineTransactions
+    }, "Mine the Transaction")));
 }
 _c = TransactionPool;
 var _default = TransactionPool;
@@ -38158,6 +38172,6 @@ $RefreshReg$(_c, "TransactionPool");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","react-router-dom":"fdOAw","./Transaction":"jLraF","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["kn9T2","8rmpt","iXgNX"], "iXgNX", "parcelRequire17cc")
+},{"react":"21dqq","react-router-dom":"fdOAw","./Transaction":"jLraF","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap":"3AD9A"}]},["kn9T2","8rmpt","iXgNX"], "iXgNX", "parcelRequire17cc")
 
 //# sourceMappingURL=index.764980e3.js.map
