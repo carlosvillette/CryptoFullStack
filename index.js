@@ -26,7 +26,6 @@ const pubsub = new PubSub({blockchain, transactionPool, redisUrl: REDIS_URL});
 const transactionMiner = new TransactionMiner({blockchain,transactionPool,wallet,pubsub});
 
 
-
 pubsub.connect();
 
 app.use(bodyParser.json());
